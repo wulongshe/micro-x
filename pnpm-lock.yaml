@@ -1,7 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
+  micro-reactive: latest
   vitest: ^0.23.4
+
+dependencies:
+  micro-reactive: 2.1.2
 
 devDependencies:
   vitest: 0.23.4
@@ -335,6 +339,11 @@ packages:
     dependencies:
       get-func-name: 2.0.0
     dev: true
+
+  /micro-reactive/2.1.2:
+    resolution: {integrity: sha512-26Yi4uuQboJWobP6qj4q55YN+4LX0wfklhcBxOPNjTLR/s8iJORAuVtKrl31nZkL8KZabo+jV5BIii8nsujPig==}
+    engines: {node: '>=14.20.0'}
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
