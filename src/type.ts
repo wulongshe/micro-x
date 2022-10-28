@@ -1,43 +1,31 @@
-import type { Getter, Signal, Reactive, ReadonlyReactive, Accessor } from 'micro-reactive'
+import type { Reactive } from 'micro-reactive'
 
 export type Getters = {
-  [key: string]: Accessor<any> | Getter<any>
+  [key: string]: () => any
 }
 
 export type Actions = {
-  [key: string]: ((...args: any[]) => any)
+  [key: string]: (...args: any[]) => void
 }
 
 export type Options<
+  Id extends string,
   S extends object,
-  G extends Getters = {},
-  A extends Actions = {},
-> = {
-  id: string
-  state: () => S
-  getters?: (state: Reactive<S>, getters: StoreComputed<G>) => G
-  actions?: (store: OptionsStore<S, G, {}>) => A
-}
+  G extends Getters,
+  A extends Actions,
+  > = {
+    id: Id
+    state: () => S
+    getters?: (state: Reactive<S>) => G
+    actions?: (state: Reactive<S>, getters: G) => A
+  }
 
-export type SetupReturn = {
-  [key: string]: Getter<any> | Signal<any> | Reactive<any> | ReadonlyReactive<any>
-}
-
-export type Computed<T> =
-  T extends Accessor<infer V>
-  ? Reactive<V>
-  : T extends Getter<infer R>
-  ? ReadonlyReactive<R>
-  : never
-
-export type StoreComputed<G extends Getters = {}> = Readonly<{ [key in keyof G]: Computed<G[key]> }>
-
-export type OptionsStore<
+export type Store<
+  Id extends string,
   S extends object,
-  G extends Getters = {},
-  A extends Actions = {},
-> = Reactive<S>
-  & StoreComputed<G>
+  G extends Getters,
+  A extends Actions,
+  > = { $id: Id }
+  & Reactive<S>
+  & Readonly<G>
   & Readonly<A>
-
-export type SetupStore<SR extends SetupReturn> = () => SR
